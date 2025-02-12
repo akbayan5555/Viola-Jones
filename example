@@ -1,4 +1,4 @@
-import cv2
+1)import cv2
 
 cat_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalcatface.xml')
 image = cv2.imread('C:/Users/User/Desktop/da25078f8a6a16ffa01c4b870530d62a.jpg')
@@ -13,3 +13,23 @@ else:
     cv2.imshow('Detected Cat Faces', image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+2)import cv2
+
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+image = cv2.imread('C:/Users/User/Desktop/10990847d11b297e2606e19f4571a84e.jpg')
+original = image.copy() 
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+
+for (x, y, w, h) in faces:
+    face = image[y:y+h, x:x+w]  
+    blurred_face = cv2.GaussianBlur(face, (51, 51), 30) 
+    image[y:y+h, x:x+w] = blurred_face 
+
+combined = cv2.hconcat([original, image])
+
+cv2.imshow('Original and Blurred Faces', combined)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
